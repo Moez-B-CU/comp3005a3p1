@@ -3,7 +3,7 @@ import sys
 
 import psycopg2
 
-
+#class which will connect to db and do operations
 class StudentDAO:
 
     def __init__(self, dbname: str, user: str, pw: str, host: str = 'localhost'):
@@ -14,6 +14,7 @@ class StudentDAO:
         self.conn = self.__get_connection()
         self.cursor = self.__get_cursor()
 
+    #connect to database
     def __get_connection(self):
         try:
             conn = psycopg2.connect(
@@ -27,15 +28,18 @@ class StudentDAO:
             print(error)
             exit()
 
+    #get cursor for querying data
     def __get_cursor(self):
         return self.conn.cursor()
 
+    #returns list of all student tuples in table
     def getAllStudents(self) -> list[tuple]:
         self.cursor.execute('SELECT * FROM students;')
         res = self.cursor.fetchall()
         pprint.pprint(res)
         return res
 
+    #adds a student tuple to table
     def addStudent(self, first_name: str, last_name: str, email: str, enrollment_date: str) -> None:
         try:
             query = f"INSERT INTO students (first_name, last_name, email, enrollment_date) VALUES ('{first_name}', '{last_name}', '{email}', '{enrollment_date}');"
@@ -46,6 +50,7 @@ class StudentDAO:
             print(error)
             return
 
+    #updates a student's email attribute given their ID
     def updateStudentEmail(self, id: str, new_email: str) -> None:
         try:
             query = f"UPDATE students SET email = '{new_email}' WHERE student_id = {id};"
@@ -56,6 +61,7 @@ class StudentDAO:
             print(error)
             return
 
+    #deletes a student tuple given their ID
     def deleteStudent(self, id: str) -> None:
         try:
             query = f"DELETE FROM students WHERE student_id = {id};"
@@ -68,15 +74,17 @@ class StudentDAO:
 
 
 def main():
-    # in order of dbname, user, pw
+    # in order of dbname, user, pw, ?host
     args = sys.argv[1:]
     if len(args) < 3:
         print('Missing db connection arguments.')
         print('Make sure to provide db name, user and password as command line arguments when running script.')
         return
 
+    #initialize db connection
     db = StudentDAO(*args)
 
+    #command loop for interaction
     while True:
         print('Commands:')
         print('1. getAllStudents')
