@@ -3,7 +3,9 @@
 
 Submission for Assignment 3 Part 1 by Moez Bajwa. Database Access Object implementation, including functions getAllStudents(), addStudent(), updateStudentEmail() and deleteStudent().  
   
-The language of choice is Python, and interaction with the database is done using Psycopg2. SQL file for initial table creation and data entry has also been included as 'create_db.sql'.
+The language of choice is Python, and interaction with the database is done using Psycopg2. SQL file for initial table creation and data entry has also been included as 'create_db.sql'.  
+
+Demonstration video can be found here: https://youtu.be/f9sy0-WUO-0
 
 
 
